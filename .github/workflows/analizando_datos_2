@@ -1,0 +1,25 @@
+nombre : imprimir datos y filtrar
+
+en :
+  cronograma :
+    - cron : ' 00 0 * * * '  # Se ejecuta todos los días a las 00:00 UTC
+  flujo de trabajo_dispatch :   # Permite la activación manual
+
+trabajos :
+  analizando_datos :
+    se ejecuta : ubuntu-latest
+    pasos :
+      - nombre : código de pago
+        usos : acciones/pago@v4
+
+      - nombre : configurar Python
+        usos : acciones/setup-python@v5
+        con :
+          versión de Python : ' 3.x '
+
+      - nombre : imprimir tabla bruta y neta
+        ejecutar : |
+          echo "tabla desde la fuente"
+          gato datos.csv
+          echo "filtrando datos"
+          grep -iv hotmail datos.csv
